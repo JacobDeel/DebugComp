@@ -72,7 +72,7 @@ int function6() {
 //Example 6: 1 1 1 1. Output: 0
 //Example 7: 0 1 1 1. Output: 0
 int function7() {
-	int doh         = read("Did your show donate to glorious leader? (1 = yes, 0 = no):\n");
+	int doh        = read("Did your show donate to glorious leader? (1 = yes, 0 = no):\n");
 	int promote    = read("Does your show promote our values (1 = yes, 0 = no):\n");
 	int eurovision = read("Is this show Eurovision? (1 = yes, 0 = no):\n");
 	int insult     = read("Has your show ever insulted glorious leader? (1 = yes, 0 = no):\n");
@@ -139,7 +139,7 @@ int function9() {
 	auto lambda = [](int x, auto &&lambda) -> bool {
 		if (x <= 1) return 1;
 		else {
-			return x + lambda(x - 1, lambda(x)); //What am I missing here?
+			return x + lambda(x - 1, lambda); //What am I missing here?
 			//new comment
 		}
 	};
