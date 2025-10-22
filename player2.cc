@@ -140,6 +140,7 @@ int function9() {
 		if (x <= 1) return 1;
 		else {
 			return x + lambda(x - 1, lambda(x)); //What am I missing here?
+			//new comment
 		}
 	};
 	return lambda(N, lambda);
