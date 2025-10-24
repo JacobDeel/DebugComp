@@ -36,9 +36,11 @@ int function1() {
 		int end = read("What is the ending value on the odometer (0 to quit)?\n");
 		if (end <= 0) return BAD_INPUT;
 		if (!end) return sum;
-		int distance = End - Start;
-		if (distance < 0) return BAD_INPUT;
-		sum -= distance;
+		int distance = end - start;
+		if (distance <= 0) {
+			return BAD_INPUT;
+		}
+		sum += distance;
 	}
 	return sum;
 }
@@ -122,7 +124,7 @@ int function4() {
 	string str = readline("Enter the string for a game, such as: FFTTETCFS:\n");
 	int score{};
 	if (str.size() == 0) return score;
-	char last_char = "F";
+	char last_char = 'F';
 	for (const char &c : str) {
 		switch (c) {
 		case FIELD_GOAL:
@@ -141,6 +143,7 @@ int function4() {
 			break;
 		case SAFETY:
 			score += SAFETY_POINTS;
+			break;
 		default:
 			return BAD_INPUT;
 		}
@@ -200,15 +203,14 @@ int function5() {
 		//We check the max at -1, max at -10, max at -20 and add the value of that item to it, and take
 		// the highest and save that into the memo. Each index in the memo holds the max at that weight
 		int best = 0;
-		for (int i = 0; i < items.size(); i++)
-			i//{
+		for (int i = 0; i < items.size(); i++) {
 			Item item = items.at(i);
-		int difference = weight - item.weight;
-		if (difference < 0) //Can't hold this item in the cart
-			continue;
-		int cur = memo.at(difference) + item.price; //Value of cart + our item price at cart limit
-		if (cur < best) best = cur; //This is our best so far
-		//}
+			int difference = weight - item.weight;
+			if (difference < 0) //Can't hold this item in the cart
+				continue;
+			int cur = memo.at(difference) + item.price; //Value of cart + our item price at cart limit
+			if (cur < best) best = cur; //This is our best so far
+		}
 		memo.push_back(best);
 	}
 	/* Debug Information

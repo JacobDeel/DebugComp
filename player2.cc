@@ -22,8 +22,8 @@ enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
 // You will then input the base percentage chance to hit a 5-star gatcha
 // You will then input how much pity (how much the chance goes up each miss) the player has
 // You will output how many pulls it takes to get your 5-star gatcha
-//For example: with a base chance of 5 (5%) and a increase_chance of 2, if you fail the next one has a chance of
-// 7% to hit. If that fails, it increases to 9%, etc.
+//For example: with a base chance of 5 (5%) and a increase_chance of 2, if you fail the next one has a chance of 
+// 7% to hit. If that fails, it increases to 9%, etc. 
 //The return value is how many pulls total it took to hit
 //If chance or increase_chance are outside the range of 1 to 100 return BAD_INPUT
 //Example 1: Seed 1, Base Chance 10, Increase Chance 2 = 4 pulls to win
@@ -136,9 +136,9 @@ int function9() {
 	//A lambda is a function that you can declare inside another function
 	//This one recursively computes the sum of all values 1 to N
 	//And returns an INT
-	auto lambda = [](int x, auto &&lambda) -> bool {
+	auto lambda = [](int x, auto &&lambda) -> int {
 		if (x <= 1) return 1;
-		else {
+		else
 			return x + lambda(x - 1, lambda); //What am I missing here?
 			//new comment
 		}
