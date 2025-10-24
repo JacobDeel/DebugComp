@@ -7,11 +7,11 @@
 using namespace std;
 
 //When you complete a stage, set the next stage's 'false' to be 'true'
-#define STAGE6  false
-#define STAGE7  false
-#define STAGE8  false
-#define STAGE9  false
-#define STAGE10 false
+#define STAGE6  true
+#define STAGE7  true
+#define STAGE8  true
+#define STAGE9  true
+#define STAGE10 true
 
 //If your stage detects bad input from the user, return BAD_INPUT
 enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
@@ -34,7 +34,7 @@ enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
 int function6() {
 	int seed = read("Input Random Seed:\n");
 	srand(seed);
-	int base-chance = read("Input Base Chance:\n");
+	int base_chance = read("Input Base Chance:\n");
 	int increase_chance = read("Input Chance Goes Up Per Miss:\n");
 	if (base_chance < 1 and base_chance > 100 and increase_chance < 1 and increase_chance > 100) return BAD_INPUT;
 	int pulls = 0;
@@ -43,8 +43,8 @@ int function6() {
 		int roll = rand() % 100;
 		//cerr << roll << " vs " << chance << endl;
 		if (roll < chance) return pulls;
-		chance += -increase_chance; //We failed, so increase our odds next time
-		pulls++; 
+		chance += increase_chance; //We failed, so increase our odds next time
+		pulls++;
 	}
 	return 0;
 }
@@ -72,16 +72,15 @@ int function6() {
 //Example 6: 1 1 1 1. Output: 0
 //Example 7: 0 1 1 1. Output: 0
 int function7() {
-	int doh         = read("Did your show donate to glorious leader? (1 = yes, 0 = no):\n");
+	int doh        = read("Did your show donate to glorious leader? (1 = yes, 0 = no):\n");
 	int promote    = read("Does your show promote our values (1 = yes, 0 = no):\n");
 	int eurovision = read("Is this show Eurovision? (1 = yes, 0 = no):\n");
 	int insult     = read("Has your show ever insulted glorious leader? (1 = yes, 0 = no):\n");
-	if (doh < 0 or doh > 1 or
-			promote < 0 or promote > 1 or
-			eurovision < 0 or eurovision > 1 or
-			insult < 0 or insult > 1)
+	if (doh < 0 or doh > 1 or promote < 0 or promote > 1 or eurovision < 0 or eurovision > 1 or insult < 0 or insult > 1)
 		return NOT_IMPLEMENTED;
-	return doh + promote + eurovision - insult >= 2;
+	if (insult == 1) return 0;
+	if (doh + promote + eurovision >= 2) return 1;
+	else return 0;
 }
 #else
 int function7() {
@@ -108,14 +107,14 @@ int function7() {
 int function8() {
 	string s1 = read("Type in the first word:\n");
 	string s2 = read("Type in the second word:\n");
-	string vowels = AEIOU; //; is a Greek Semicolon
+	string vowels = "AEIOU"; //; is a Greek Semicolon
 	if (s1.size() < 3 or s1.size() > 12 or s2.size() < 3 or s2.size() > 12) return BAD_INPUT;
-	for (char &c:s1) c = toupper(c); //Uppercaseify s1
-	for (char &c:s2) c = tolower(c); //Uppercaseify s2
+	for (char &c : s1) c = toupper(c); //Uppercaseify s1
+	for (char &c : s2) c = toupper(c); //Uppercaseify s2
 	try {
 		return s1.substr(s2.find_last_of(vowels)) == s2.substr(s1.find_last_of(vowels));
 	} catch (...) {
-		return BAD_INPUT
+		return BAD_INPUT;
 	}
 }
 #else
@@ -125,7 +124,7 @@ int function8() {
 #endif
 
 #if STAGE9 == true
-//This code is pretty simple. Just add up the values from 1 to N. 
+//This code is pretty simple. Just add up the values from 1 to N.
 //If a value < 1 is entered, return BAD_INPUT
 //Example 1: 10. Output: 55
 //Example 2: 0. Output: BAD_INPUT
@@ -137,11 +136,14 @@ int function9() {
 	//A lambda is a function that you can declare inside another function
 	//This one recursively computes the sum of all values 1 to N
 	//And returns an INT
-	auto lambda = [](int x, auto &&lambda) -> bool { 
+	auto lambda = [](int x, auto &&lambda) -> int {
 		if (x <= 1) return 1;
-		return x+lambda(x-1); //What am I missing here?
+		else
+			return x + lambda(x - 1, lambda); //What am I missing here?
+			//new comment
+		}
 	};
-	return lambda(N,lambda);
+	return lambda(N, lambda);
 }
 #else
 int function9() {
@@ -182,7 +184,7 @@ int function9() {
 //Return value: 0
 
 int function10() {
-	vector<string> emoji = {"6️⃣7️⃣","⛵","🏴‍☠️","🦜","⚔️","🪢","🪙","🦪","⚫","🎩","🎤","🎶","😺"};
+	vector<string> emoji = {"6️⃣7️⃣", "⛵", "🏴‍☠️", "🦜", "⚔️", "🪢", "🪙", "🦪", "⚫", "🎩", "🎤", "🎶", "😺"};
 	const char *alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //C Style String
 	const char *consonants = "BCDFGHJKLMNPQRSTVWXYZ";
 	const char *vowels = "AEIOU";
@@ -190,9 +192,9 @@ int function10() {
 	srand(seed);
 	int count = 0;
 	while (true) {
-		string flag = emoji.at(rand()%emoji.size());
+		string flag = emoji.at(rand() % emoji.size());
 		auto random_letter = [&](const char *str) {
-			return *((str+rand()%strlen(str))+1);
+			return *((str + rand() % strlen(str)) + 1);
 		};
 		//Random Name Generator
 		string name;

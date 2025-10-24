@@ -7,11 +7,15 @@
 using namespace std;
 
 //When you complete a stage, set the next stage's 'false' to be 'true'
-#define STAGE1 true
-#define STAGE2 true
-#define STAGE3 true
-#define STAGE4 true
-#define STAGE5 true
+#define STAGE1 false
+#define STAGE2 false
+#define STAGE3 false
+#define STAGE4 false
+#define STAGE5 false
+
+//If your stage isn't implemented, it should return NOT_IMPLEMENTED
+//If your stage detects bad input from the user, return BAD_INPUT
+//enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
 
 //This code is a mileage tracker for a car, to track business miles for the IRS
 //You will enter a start mileage and an end mileage, compute the distance driven
@@ -82,7 +86,9 @@ int function3() {
 		return 1;
 	} else if (song == "Edge of Seventeen") {
 		return 1;
-	} else if (song == "Stop Draggin' My Heart Around") {
+	} else
+		return 0;
+	else if (song == "Stop Draggin' My Heart Around") {
 		return 1;
 	} else if (song == "Stand Back") {
 		return 1;
