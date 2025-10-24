@@ -112,7 +112,7 @@ int function8() {
 	for (char &c : s1) c = toupper(c); //Uppercaseify s1
 	for (char &c : s2) c = toupper(c); //Uppercaseify s2
 	try {
-		return s1.substr(s2.find_last_of(vowels)) == s2.substr(s1.find_last_of(vowels));
+		return s1.substr(s1.find_last_of(vowels)) == s2.substr(s2.find_last_of(vowels));
 	} catch (...) {
 		return BAD_INPUT;
 	}
@@ -136,7 +136,7 @@ int function9() {
 	//A lambda is a function that you can declare inside another function
 	//This one recursively computes the sum of all values 1 to N
 	//And returns an INT
-	auto lambda = [](int x, auto &&lambda) -> bool {
+	auto lambda = [](int x, auto &&lambda) -> int {
 		if (x <= 1) return 1;
 		else {
 			return x + lambda(x - 1, lambda); //What am I missing here?
