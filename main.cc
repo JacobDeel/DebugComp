@@ -8,14 +8,10 @@ using namespace std;
 
 //When you complete a stage, set the next stage's 'false' to be 'true'
 #define STAGE1 true
-#define STAGE2 false
-#define STAGE3 false
-#define STAGE4 false
-#define STAGE5 false
-
-//If your stage isn't implemented, it should return NOT_IMPLEMENTED
-//If your stage detects bad input from the user, return BAD_INPUT
-//enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
+#define STAGE2 true
+#define STAGE3 true
+#define STAGE4 true
+#define STAGE5 true
 
 //This code is a mileage tracker for a car, to track business miles for the IRS
 //You will enter a start mileage and an end mileage, compute the distance driven
@@ -37,7 +33,9 @@ int function1() {
 		if (end <= 0) return BAD_INPUT;
 		if (!end) return sum;
 		int distance = end - start;
-		if (distance < 0) return BAD_INPUT;
+		if (distance <= 0) {
+			return BAD_INPUT;
+		}
 		sum += distance;
 	}
 	return sum;
@@ -48,7 +46,7 @@ int function1() {
 }
 #endif
 
-#if STAGE2 == false
+#if STAGE2 == true
 //For this assignment, you will need to roll 20 six-sided die and return their sum.
 //This is basically doing a Fireball spell in D&D. Expected value is 70.
 //With seed 1 it should return 66
@@ -70,7 +68,7 @@ int function2() {
 }
 #endif
 
-#if STAGE3 == false
+#if STAGE3 == true
 //This code will return 1 (true) if the input is "Edge of Seventeen", "Stand Back", etc. and 0 (false) otherwise
 //Example: "The Chain" is input. Output: 1
 //Example: "Stand Back" is input. Output: 1
@@ -101,7 +99,7 @@ int function3() {
 }
 #endif
 
-#if STAGE4 == false
+#if STAGE4 == true
 //This code will compute the score for a football game. You will input a string such as "FTETCFTS" where:
 //F - field goal: 3 points
 //T - touchdown: 6 points
@@ -139,6 +137,7 @@ int function4() {
 			break;
 		case SAFETY:
 			score += SAFETY_POINTS;
+			break;
 		default:
 			return BAD_INPUT;
 		}
@@ -152,7 +151,7 @@ int function4() {
 }
 #endif
 
-#if STAGE5 == false
+#if STAGE5 == true
 //Supermarket Sweep
 //You are turned loose in a supermarket with a shopping cart that can hold at max 100kg of weight
 //You will open up a file containing (one per line) an item.
