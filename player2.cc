@@ -10,8 +10,8 @@ using namespace std;
 #define STAGE6  false
 #define STAGE7  false
 #define STAGE8  false
-#define STAGE9  false 
-#define STAGE10 false
+#define STAGE9  false
+#define STAGE10 true
 
 //If your stage detects bad input from the user, return BAD_INPUT
 enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
@@ -22,8 +22,8 @@ enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
 // You will then input the base percentage chance to hit a 5-star gatcha
 // You will then input how much pity (how much the chance goes up each miss) the player has
 // You will output how many pulls it takes to get your 5-star gatcha
-//For example: with a base chance of 5 (5%) and a increase_chance of 2, if you fail the next one has a chance of 
-// 7% to hit. If that fails, it increases to 9%, etc. 
+//For example: with a base chance of 5 (5%) and a increase_chance of 2, if you fail the next one has a chance of
+// 7% to hit. If that fails, it increases to 9%, etc.
 //The return value is how many pulls total it took to hit
 //If chance or increase_chance are outside the range of 1 to 100 return BAD_INPUT
 //Example 1: Seed 1, Base Chance 10, Increase Chance 2 = 4 pulls to win
@@ -36,8 +36,8 @@ int function6() {
 	srand(seed);
 	int base_chance = read("Input Base Chance:\n");
 	int increase_chance = read("Input Chance Goes Up Per Miss:\n");
-	if (base_chance < 1 and base_chance > 100 and increase_chance < 1 and increase_chance > 100) return BAD_INPUT;
-	int pulls = 0;
+	if ((base_chance < 1 or base_chance > 100) or (increase_chance < 1 or increase_chance > 100)) return BAD_INPUT;
+	int pulls = 1;
 	int chance = base_chance;
 	while (true) {
 		int roll = rand() % 100;
@@ -77,7 +77,7 @@ int function7() {
 	int eurovision = read("Is this show Eurovision? (1 = yes, 0 = no):\n");
 	int insult     = read("Has your show ever insulted glorious leader? (1 = yes, 0 = no):\n");
 	if (doh < 0 or doh > 1 or promote < 0 or promote > 1 or eurovision < 0 or eurovision > 1 or insult < 0 or insult > 1)
-		return NOT_IMPLEMENTED;
+		return BAD_INPUT;
 	if (insult == 1) return 0;
 	if (doh + promote + eurovision >= 2) return 1;
 	else return 0;
@@ -112,7 +112,7 @@ int function8() {
 	for (char &c : s1) c = toupper(c); //Uppercaseify s1
 	for (char &c : s2) c = toupper(c); //Uppercaseify s2
 	try {
-		return s1.substr(s2.find_last_of(vowels)) == s2.substr(s1.find_last_of(vowels));
+		return s1.substr(s1.find_last_of(vowels)) == s2.substr(s2.find_last_of(vowels));
 	} catch (...) {
 		return BAD_INPUT;
 	}
@@ -139,9 +139,9 @@ int function9() {
 	auto lambda = [](int x, auto &&lambda) -> int {
 		if (x <= 1) return 1;
 		else
-			return x + lambda(x - 1, lambda); //What am I missing here?
-			//new comment
-		}
+			return (x + lambda(x - 1, lambda)); //What am I missing here?
+		//new comment
+	};
 	return lambda(N, lambda);
 }
 #else
@@ -193,7 +193,7 @@ int function10() {
 	while (true) {
 		string flag = emoji.at(rand() % emoji.size());
 		auto random_letter = [&](const char *str) {
-			return *((str + rand() % strlen(str)) + 1);
+			return *((str + rand() % strlen(str)));
 		};
 		//Random Name Generator
 		string name;
