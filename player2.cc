@@ -7,11 +7,11 @@
 using namespace std;
 
 //When you complete a stage, set the next stage's 'false' to be 'true'
-#define STAGE6  true
-#define STAGE7  true
-#define STAGE8  true
-#define STAGE9  true
-#define STAGE10 true
+#define STAGE6  false
+#define STAGE7  false
+#define STAGE8  false
+#define STAGE9  false 
+#define STAGE10 false
 
 //If your stage detects bad input from the user, return BAD_INPUT
 enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
@@ -142,7 +142,6 @@ int function9() {
 			return x + lambda(x - 1, lambda); //What am I missing here?
 			//new comment
 		}
-	};
 	return lambda(N, lambda);
 }
 #else
