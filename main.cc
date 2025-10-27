@@ -7,15 +7,14 @@
 using namespace std;
 
 //When you complete a stage, set the next stage's 'false' to be 'true'
-#define STAGE1 false
-#define STAGE2 false
-#define STAGE3 false
-#define STAGE4 false
-#define STAGE5 false
+#define STAGE1 true
+#define STAGE2 true
+#define STAGE3 true
+#define STAGE4 true
+#define STAGE5 true
 
 //If your stage isn't implemented, it should return NOT_IMPLEMENTED
 //If your stage detects bad input from the user, return BAD_INPUT
-//enum RETVAL { NOT_IMPLEMENTED = -100, BAD_INPUT = -200};
 
 //This code is a mileage tracker for a car, to track business miles for the IRS
 //You will enter a start mileage and an end mileage, compute the distance driven
@@ -31,13 +30,13 @@ int function1() {
 	int sum = 0;
 	while (true) {
 		int start = read("What is the starting value on the odometer (0 to quit)?\n");
-		if (start <= 0) return BAD_INPUT;
+		if (start <= -1) return BAD_INPUT;
 		if (!start) return sum;
 		int end = read("What is the ending value on the odometer (0 to quit)?\n");
-		if (end <= 0) return BAD_INPUT;
+		if (end <= -1) return BAD_INPUT;
 		if (!end) return sum;
 		int distance = end - start;
-		if (distance <= 0) {
+		if (distance < 0) {
 			return BAD_INPUT;
 		}
 		sum += distance;
@@ -60,8 +59,8 @@ int function1() {
 int function2() {
 	int seed = read("What seed should we use for the random number generator?\n");
 	int sum{};
+	srand(seed);
 	for (int i = 0; i < 20; i++) {
-		srand(seed);
 		sum += rand() % 6 + 1;
 	}
 	return sum;
@@ -81,14 +80,13 @@ int function3() {
 	cout << "Stevie Nicks was the lead singer for Fleetwood Mac and also had a solo career.\n";
 	cout << "Please enter the name of a song and we will return 1 if it is one of her songs, 0 otherwise.\n";
 	string song;
-	cin >> song;
+	getline(cin, song);
+	getline(cin, song);
 	if (song == "The Chain") {
 		return 1;
 	} else if (song == "Edge of Seventeen") {
 		return 1;
-	} else
-		return 0;
-	else if (song == "Stop Draggin' My Heart Around") {
+	} else if (song == "Stop Draggin' My Heart Around") {
 		return 1;
 	} else if (song == "Stand Back") {
 		return 1;
@@ -134,11 +132,11 @@ int function4() {
 			score += TOUCHDOWN_POINTS;
 			break;
 		case EXTRA_POINT:
-			if (last_char == TOUCHDOWN) return BAD_INPUT;
+			if (last_char != TOUCHDOWN) return BAD_INPUT;
 			score += EXTRA_POINT_POINT;
 			break;
 		case CONVERSION:
-			if (last_char == TOUCHDOWN) return BAD_INPUT;
+			if (last_char != TOUCHDOWN) return BAD_INPUT;
 			score += CONVERSION_POINTS;
 			break;
 		case SAFETY:
@@ -203,22 +201,24 @@ int function5() {
 		//We check the max at -1, max at -10, max at -20 and add the value of that item to it, and take
 		// the highest and save that into the memo. Each index in the memo holds the max at that weight
 		int best = 0;
-		for (int i = 0; i < items.size(); i++) {
+		for (int i = 1; i < items.size(); i++) {
 			Item item = items.at(i);
 			int difference = weight - item.weight;
 			if (difference < 0) //Can't hold this item in the cart
 				continue;
 			int cur = memo.at(difference) + item.price; //Value of cart + our item price at cart limit
-			if (cur < best) best = cur; //This is our best so far
+			if (cur > best) best = cur; //This is our best so far
 		}
 		memo.push_back(best);
 	}
-	/* Debug Information
+	/*
 	for (int i = 0; i < memo.size(); i++) {
 		cerr << "Weight " << i << " Value: " << memo.at(i) << endl;
 	}
+	return memo.back();
 	*/
 	return memo.back();
+
 }
 #else
 int function5() {
